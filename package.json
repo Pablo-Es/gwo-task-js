@@ -24,7 +24,7 @@
     "write-file-webpack-plugin": "^4.5.0"
   },
   "author": "Gdańskie Wydawnictwo Oswiatowe",
-  "license": "free",
+  "license": "MIT",
   "dependencies": {
     "@babel/polyfill": "^7.2.5"
   }
