@@ -29,8 +29,15 @@ h1  {
     .time-score__time {
         margin-left: auto;
     }
-.game {
-    /*border: 1px solid #000;*/
+.table {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+
+}
+table {
+    border-spacing: 15px;
+
 }
  .tiles {
      display: flex;
@@ -38,14 +45,13 @@ h1  {
      justify-content: center;
      margin-bottom: 50px;
  }
-  .tiles__tile {
+  .tiles__tile, td {
       width: 40px;
       height: 40px;
-      margin-right: 10px;
       border: 1px solid #000;
 
   }
-  .tiles__tile.active {
+  .active {
       background: green;
   }
   .btns {

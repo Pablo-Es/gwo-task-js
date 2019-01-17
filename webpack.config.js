@@ -5,7 +5,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const WriteFilePlugin = require('write-file-webpack-plugin');
 
 const isProduction = process.argv.indexOf('-p') >= 0 || process.env.NODE_ENV === 'production';
-const entryFile = fs.existsSync('./src/index.ts') ? './src/index.ts' : './src/index.js';
+const entryFile = fs.existsSync('./src/index.js') ? './src/index.js' : './src/index.js';
 
 module.exports = {
     entry: ['@babel/polyfill', entryFile],
