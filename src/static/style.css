@@ -1,5 +1,8 @@
 @import "normalize.css";
+* {
+    box-sizing: border-box;
 
+}
 
 .container {
     width: 100%;
@@ -8,8 +11,57 @@
     margin-right: auto;
     margin-left: auto;
 }
+h1  {
+    text-align: center;
+}
+.time-score {
+    display: flex;
 
+}
+    .time-score__life, .time-score__points, .time-score__time {
+        padding: 10px;
+        font-size: 25px;
+        border: 1px solid #000;
+    }
+    .time-score__life {
+        margin-right: 5px;
+    }
+    .time-score__time {
+        margin-left: auto;
+    }
+.game {
+    /*border: 1px solid #000;*/
+}
+ .tiles {
+     display: flex;
+     flex-flow: wrap;
+     justify-content: center;
+     margin-bottom: 50px;
+ }
+  .tiles__tile {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+      border: 1px solid #000;
 
+  }
+  .tiles__tile.active {
+      background: green;
+  }
+  .btns {
+      display: flex;
+      justify-content: center;
+  }
+  .btns__start, .btns__reset {
+      border: 1px solid #000;
+      font-size: 25px;
+      padding: 15px 30px;
+      cursor: pointer;
+
+  }
+  .btns__start {
+      margin-right: 50px;
+  }
 
 @media (min-width: 576px) {
     .container {
