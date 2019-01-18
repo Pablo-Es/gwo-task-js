@@ -29,13 +29,13 @@ h1  {
     .time-score__time {
         margin-left: auto;
     }
-.table {
+.table-content {
     display: flex;
     justify-content: center;
     margin-bottom: 50px;
 
 }
-table {
+.table {
     border-spacing: 15px;
 
 }
