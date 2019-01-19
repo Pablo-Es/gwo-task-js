@@ -64,6 +64,7 @@ const decrementTime = () => {
     console.log('dziala');
 };
 const startGame = () => {
+    startBtn.disabled = true;
     timeoutForPlayerTime = setInterval(decrementTime, 1000);
 
     addActiveClass();
