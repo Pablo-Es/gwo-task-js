@@ -2,14 +2,20 @@ const lifes = document.querySelector('.js-time-score__life-number');
 const points = document.querySelector('.js-time-score__points-nmb');
 const time = document.querySelector('.js-time-score__time');
 const table = document.querySelector('.js-table');
-let td = document.getElementsByTagName('td');
+const startBtn = document.querySelector('.js-btn__start');
+const resetBtn = document.querySelector('.js-btn__reset');
 
+let td = document.getElementsByTagName('td');
 let tdArray;
+let timeLoss;
 
 const squareNumberInRow = 5;
 const lifesNumber = 3;
-const initialTime = 60;
+let initialTime = 60;
 let scoreCounter  = 0;
+
+let timeoutForActiveClass;
+let timeoutForPlayerTime;
 
 const setSquare = (squareNumberInRow) => {
 let output ='';
@@ -45,7 +51,32 @@ const addActiveClass = () => {
    // console.log(tdArray.ind;exOf(randomIndex))
   // tdArray.indexOf(randomIndex).classList.add("active");
 };
-addActiveClass();
-console.log('tdArray=',tdArray);
 
+const decrementTime = () => {
+
+    if(initialTime <= 0) {
+        alert("Straciłeś życie");
+        clearInterval(timeoutForPlayerTime);
+        initialTime = 60;
+    }
+    initialTime--;
+    time.innerText = initialTime;
+    console.log('dziala');
+};
+const startGame = () => {
+    timeoutForPlayerTime = setInterval(decrementTime, 1000);
+
+    addActiveClass();
+};
+
+const resetGame = () => {
+    lifes.innerText = lifesNumber;
+    points.innerText = 0;
+    time.innerText = initialTime;
+
+};
+
+
+startBtn.addEventListener('click', startGame);
+resetBtn.addEventListener('click', resetGame);
 
