@@ -38,11 +38,7 @@ const setSquare = (squareNumberInRow) => {
 
 };
 setSquare(squareNumberInRow);
-const shuffleSquare = () => {
 
-    tdArray = [...tdList];
-    return tdArray.sort(() => Math.random() - 0.5);
-};
 const addActiveClass = () => {
     let randomIndex = Math.floor(Math.random() * tdList.length + 1);
     tdArray = [...tdList];
@@ -53,15 +49,16 @@ const addActiveClass = () => {
     });
 
     timeoutForRemoveActiveClass = setTimeout(removeActiveClass, 2000);
-    console.log('addActive', tdList);
+
 };
+
 const removeActiveClass = () => {
 
     for (let i = 0; i < activeClassList.length; i++) {
         activeClassList[i].classList.remove('active');
     }
 
-    console.log('remove', tdList);
+
 };
 
 const decrementTime = () => {
