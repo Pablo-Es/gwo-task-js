@@ -11,7 +11,7 @@ let tdArray;
 let timeLoss;
 
 const squareNumberInRow = 5;
-const lifesNumber = 3;
+let lifesNumber = 3;
 let initialTime = 60;
 let scoreCounter  = 0;
 
@@ -67,12 +67,9 @@ const removeActiveClass = () => {
 const decrementTime = () => {
 
     if(timeLoss <= 0) {
-        alert("Koniec gry");
+        resetGame();
 
-        clearAllIntervals();
-        removeActiveClass();
-        initialTime = 60;
-        startBtn.disabled = false;
+        alert("Koniec gry");
         return
     }
     timeLoss--;
@@ -84,15 +81,19 @@ const addPoints = () => {
     let lossLife = lifesNumber;
     tdArray = [...tdList];
     tdArray.forEach(item => item.addEventListener('click',function() {
-        console.log(this.classList);
-
-if(lossLife > 0 ) {
-    this.classList.contains('active')   ? scoreCounter++ : lossLife--;
-    lifes.innerText = lossLife;
-
-}
-
         console.log(lossLife);
+        if(lossLife >= 1 ) {
+        this.classList.contains('active')   ? scoreCounter++ : (lossLife--,alert('Straciłeś życie'));
+        points.innerHTML = scoreCounter;
+        lifes.innerText = lossLife;
+
+} else {
+        resetGame();
+
+        alert("Przegrałeś");
+
+
+    }
     }))
 };
 const clearAllIntervals = () => {
@@ -103,8 +104,9 @@ const clearAllIntervals = () => {
 
 };
 const startGame = () => {
+    resetGame();
     timeLoss = initialTime;
-
+addPoints();
     addActiveClass();
     startBtn.disabled = true;
     timeoutForPlayerTime = setInterval(decrementTime, 1000);
@@ -117,13 +119,13 @@ const resetGame = () => {
     clearAllIntervals();
     removeActiveClass();
     startBtn.disabled = false;
-
-    lifes.innerText = lifesNumber;
+    lifesNumber = 3;
+    lifes.innerText = 3;
     points.innerText = 0;
     time.innerText = initialTime;
 
 };
-addPoints();
+
 // tile.addEventListener('click',addPoints);
 startBtn.addEventListener('click', startGame);
 resetBtn.addEventListener('click', resetGame);
