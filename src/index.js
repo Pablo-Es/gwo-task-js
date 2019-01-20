@@ -13,7 +13,7 @@ let timeLoss;
 const squareNumberInRow = 5;
 let lifesNumber = 3;
 let initialTime = 60;
-let scoreCounter  = 0;
+let scoreCounter = 0;
 
 
 let timeoutForAddActiveClass;
@@ -21,17 +21,17 @@ let timeoutForRemoveActiveClass;
 let timeoutForPlayerTime;
 
 const setSquare = (squareNumberInRow) => {
-let output ='';
-for (let i = 0; i < squareNumberInRow; i++) {
+    let output = '';
+    for (let i = 0; i < squareNumberInRow; i++) {
 
-    let td = '';
-    for(let j = 0; j < squareNumberInRow; j++) {
-        td+= `<td data-tdId="td_${i}${j}"></td>`;
+        let td = '';
+        for (let j = 0; j < squareNumberInRow; j++) {
+            td += `<td data-tdId="td_${i}${j}"></td>`;
+        }
+        output += `<tr>${td}</tr>`;
+
+
     }
-    output += `<tr>${td}</tr>`;
-
-
-}
 
     table.innerHTML = output;
 
@@ -44,15 +44,15 @@ const shuffleSquare = () => {
     return tdArray.sort(() => Math.random() - 0.5);
 };
 const addActiveClass = () => {
-  let randomIndex = Math.floor(Math.random()* tdList.length + 1);
+    let randomIndex = Math.floor(Math.random() * tdList.length + 1);
     tdArray = [...tdList];
     tdArray = tdArray.map((item, idx) => {
-       if(idx === randomIndex) {
-           item.classList.add("active");
-       }
+        if (idx === randomIndex) {
+            item.classList.add("active");
+        }
     });
 
-timeoutForRemoveActiveClass = setTimeout(removeActiveClass, 2000);
+    timeoutForRemoveActiveClass = setTimeout(removeActiveClass, 2000);
     console.log('addActive', tdList);
 };
 const removeActiveClass = () => {
@@ -61,12 +61,12 @@ const removeActiveClass = () => {
         activeClassList[i].classList.remove('active');
     }
 
-    console.log('remove',tdList);
+    console.log('remove', tdList);
 };
 
 const decrementTime = () => {
 
-    if(timeLoss <= 0) {
+    if (timeLoss <= 0) {
         resetGame();
 
         alert("Koniec gry");
@@ -77,25 +77,29 @@ const decrementTime = () => {
     time.innerText = timeLoss;
 
 };
-const addPoints = () => {
-    let lossLife = lifesNumber;
-    tdArray = [...tdList];
-    tdArray.forEach(item => item.addEventListener('click',function() {
-        console.log(lossLife);
-        if(lossLife >= 1 ) {
-        this.classList.contains('active')   ? scoreCounter++ : (lossLife--,alert('Straciłeś życie'));
-        points.innerHTML = scoreCounter;
-        lifes.innerText = lossLife;
 
-} else {
-        resetGame();
+function addPoints() {
+
+        this.classList.contains('active') ? scoreCounter++ : (lifesNumber--, alert('Straciłeś życie'));
+        points.innerHTML = scoreCounter;
+        lifes.innerText = lifesNumber;
+
+
+if ( lifesNumber === 0) {
 
         alert("Przegrałeś");
-
+        resetGame();
+        removeListener();
 
     }
-    }))
-};
+
+}
+function removeListener() {
+    tdArray = [...tdList];
+    tdArray.forEach(item => {
+        item.removeEventListener('click', addPoints)
+    });
+}
 const clearAllIntervals = () => {
 
     clearInterval(timeoutForPlayerTime);
@@ -105,12 +109,16 @@ const clearAllIntervals = () => {
 };
 const startGame = () => {
     resetGame();
+    tdArray = [...tdList];
     timeLoss = initialTime;
-addPoints();
+    lifesNumber = 3;
+    tdArray.forEach(item => {
+        item.addEventListener('click', addPoints)
+    });
     addActiveClass();
     startBtn.disabled = true;
     timeoutForPlayerTime = setInterval(decrementTime, 1000);
-    timeoutForAddActiveClass = setInterval( addActiveClass, 3000);
+    timeoutForAddActiveClass = setInterval(addActiveClass, 3000);
 
 
 };
@@ -119,6 +127,7 @@ const resetGame = () => {
     clearAllIntervals();
     removeActiveClass();
     startBtn.disabled = false;
+    scoreCounter = 0;
     lifesNumber = 3;
     lifes.innerText = 3;
     points.innerText = 0;
