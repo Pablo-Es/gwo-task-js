@@ -4,8 +4,9 @@ const time = document.querySelector('.js-time-score__time');
 const table = document.querySelector('.js-table');
 const startBtn = document.querySelector('.js-btn__start');
 const resetBtn = document.querySelector('.js-btn__reset');
+const activeClassList = document.getElementsByClassName('active');
 
-let td = document.getElementsByTagName('td');
+let tdList = document.getElementsByTagName('td');
 let tdArray;
 let timeLoss;
 
@@ -14,7 +15,9 @@ const lifesNumber = 3;
 let initialTime = 60;
 let scoreCounter  = 0;
 
-let timeoutForActiveClass;
+
+let timeoutForAddActiveClass;
+let timeoutForRemoveActiveClass;
 let timeoutForPlayerTime;
 
 const setSquare = (squareNumberInRow) => {
@@ -37,40 +40,65 @@ for (let i = 0; i < squareNumberInRow; i++) {
 setSquare(squareNumberInRow);
 const shuffleSquare = () => {
 
-    tdArray = [...td];
+    tdArray = [...tdList];
     return tdArray.sort(() => Math.random() - 0.5);
 };
 const addActiveClass = () => {
-  let randomIndex = Math.floor(Math.random()* td.length + 1);
-    tdArray = [...td];
+  let randomIndex = Math.floor(Math.random()* tdList.length + 1);
+    tdArray = [...tdList];
     tdArray = tdArray.map((item, idx) => {
        if(idx === randomIndex) {
            item.classList.add("active");
        }
     });
-   // console.log(tdArray.ind;exOf(randomIndex))
-  // tdArray.indexOf(randomIndex).classList.add("active");
+
+timeoutForRemoveActiveClass = setTimeout(removeActiveClass, 2000);
+    console.log('addActive', tdList);
+};
+const removeActiveClass = () => {
+
+    for (let i = 0; i < activeClassList.length; i++) {
+        activeClassList[i].classList.remove('active');
+    }
+
+    console.log('remove',tdList);
 };
 
 const decrementTime = () => {
 
-    if(initialTime <= 0) {
-        alert("Straciłeś życie");
-        clearInterval(timeoutForPlayerTime);
+    timeLoss--;
+    if(timeLoss <= 0) {
+        alert("Koniec gry");
+
+        clearAllIntervals();
+        removeActiveClass();
         initialTime = 60;
+        startBtn.disabled = false;
     }
-    initialTime--;
-    time.innerText = initialTime;
-    console.log('dziala');
+    time.innerText = timeLoss;
+
+};
+const clearAllIntervals = () => {
+
+    clearInterval(timeoutForPlayerTime);
+    clearTimeout(timeoutForRemoveActiveClass);
+    clearInterval(timeoutForAddActiveClass);
+
 };
 const startGame = () => {
+    timeLoss = initialTime;
+    addActiveClass();
     startBtn.disabled = true;
     timeoutForPlayerTime = setInterval(decrementTime, 1000);
+    timeoutForAddActiveClass = setInterval( addActiveClass, 3000);
 
-    addActiveClass();
 };
 
 const resetGame = () => {
+    clearAllIntervals();
+    removeActiveClass();
+    startBtn.disabled = false;
+
     lifes.innerText = lifesNumber;
     points.innerText = 0;
     time.innerText = initialTime;
